@@ -42,6 +42,6 @@ t_python_hello = PythonOperator(
     python_callable=print_hello_world,
     dag=dag,
 )
-
+# zaleznosci taskow
 t_dummy >> t_bash_hello
 t_dummy >> t_python_hello
