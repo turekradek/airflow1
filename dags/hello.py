@@ -14,7 +14,7 @@ args ={
 dag = DAG(
     dag_id='hello_world',
     default_args=args,
-    schedule_interval='* */5 * * *',
+    schedule_interval='*/2 * * * *',
     catchup=False,
     dagrun_timeout=timedelta(minutes=60),
 )

@@ -18,26 +18,30 @@ args ={
 dag = DAG(
     dag_id='zz1',
     default_args=args,
-    schedule_interval='* */5 * * *',
+    schedule_interval='*/2 * * * *',
     catchup=False,
     dagrun_timeout=timedelta(minutes=60),
 )
 
 
-def make_files(my_path=r'/home/radek/in'):
+def make_files():
+    my_path=r'/home/rturek2/in'
     ile = random.randint(3,10)
     now = datetime.now()
     for i in range( ile ):
-        date_today = now.strftime("%d/%m/%Y, %H:%M:%S")
-        nazwa = [ random.randint(97,122)  for i in random.randint(5,10)]
+        date_today = now.strftime("%d_%m_%Y_%H__%M_%S_")
+        nazwa = [ chr(random.randint(97,122))  for i in range(random.randint(5,10))]
         rozszerzenie = '.txt'
-        nazwa = [date_today,''.join(nazwa),rozszerzenie]
+        nazwa = ''.join([my_path,date_today,''.join(nazwa),rozszerzenie])
+        print( nazwa )
         with open(nazwa , 'w') as f:
-            f.write(f'plik o nazwie {nazwa}')
+            f.write(f'plik o nazwie ')
+    return 'cos sie stalo'
         
 
-def move_files(my_path=r'/home/radek/in'):
-    destination = r'/home/radek/out'
+def move_files():
+    my_path=r'/home/rturek2/in'
+    destination = r'/home/rturek2/out'
     lista = os.listdir()
     files = [  el  for el in lista if os.path.isfile   ]
     directories = [  el  for el in lista if os.path.isdir   ]
