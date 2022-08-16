@@ -1,5 +1,6 @@
 from datetime import timedelta
-from datetime import datetime 
+from datetime import datetime
+from genericpath import isfile 
 import airflow
 from airflow.models import DAG 
 from airflow.operators.python_operator import PythonOperator 
@@ -30,9 +31,10 @@ def make_files():
     now = datetime.now()
     for i in range( ile ):
         date_today = now.strftime("%d_%m_%Y_%H__%M_%S_")
-        nazwa = [ chr(random.randint(97,122))  for i in range(random.randint(5,10))]
+        nazwa = [ chr(random.randint(97,122))  for i in range(random.randint(2,4))]
         rozszerzenie = '.txt'
-        nazwa = ''.join([my_path,date_today,''.join(nazwa),rozszerzenie])
+        nazwa = ''.join([date_today,''.join(nazwa),rozszerzenie])
+        nazwa = os.path.join(my_path,nazwa)
         print( nazwa )
         with open(nazwa , 'w') as f:
             f.write(f'plik o nazwie ')
@@ -42,13 +44,14 @@ def make_files():
 def move_files():
     my_path=r'/home/rturek2/in'
     destination = r'/home/rturek2/out'
-    lista = os.listdir()
-    files = [  el  for el in lista if os.path.isfile   ]
-    directories = [  el  for el in lista if os.path.isdir   ]
+    lista = os.listdir(my_path)
+    files = [   el  for el in lista if os.path.isfile   ]
+    # directories = [  os.path.join(destination,el)  for el in lista if os.path.isdir   ]
     for el in files:
-        shutil.move( os.path.join(my_path,el), os.path.join(destination,el))
-    if len( os.listdir() ) == 0:
-        return 'przekopiowane'
+        shutil.move( os.path.join(my_path,el), os.path.join(destination, el) )
+        print( el )
+        
+    return 'ZROBIONE'
 
 
 
