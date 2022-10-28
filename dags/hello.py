@@ -12,7 +12,7 @@ args ={
 }
 
 dag = DAG(
-    dag_id='hello_world',
+    dag_id='ztest',
     default_args=args,
     schedule_interval='*/2 * * * *',
     catchup=False,
